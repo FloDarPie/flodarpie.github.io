@@ -63,6 +63,20 @@ p.job {
   grid-template-columns: 6ch 1ch 1fr 1ch 20ch;
   column-gap: 1.5em;
 }
+
+@media (max-width: 600px) {
+  p.job {
+    display: block;
+  }
+
+  p.job span:nth-child(2),
+  p.job span:nth-child(4) {
+    display: block;
+    height: 0.3em;
+    visibility: hidden;
+  }
+}
+
 </style>
 
 <h2 id="education">Education</h2>
@@ -161,7 +175,7 @@ p.job {
 
       <div class="footer-col footer-col-3">
         <p>D&#39;aussi loin que je me souvienne, la cuisine est l&#39;endroit qui m&#39;a toujours paru le plus accueillant...</p>
-        Dernière compilation : 26/01/2026
+        Dernière compilation : 02/02/2026
       </div>
     </div>
 
