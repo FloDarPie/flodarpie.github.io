@@ -15,6 +15,7 @@ serve:
 ## Générer le site statique dans _site/
 build:
 	$(JEKYLL) build
+	cp -r _site/* ../flodarpie.github.io
 
 ## Nettoyer les fichiers générés
 clean:
