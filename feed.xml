@@ -1,1 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://flodarpie.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://flodarpie.github.io//" rel="alternate" type="text/html" /><updated>2026-11-18T10:00:18+00:00</updated><id>https://flodarpie.github.io//feed.xml</id><title type="html">Florian Duzés</title><subtitle>D&apos;aussi loin que je me souvienne, la cuisine est l&apos;endroit qui m&apos;a toujours paru le plus accueillant...</subtitle></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://flodarpie.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://flodarpie.github.io//" rel="alternate" type="text/html" /><updated>2026-11-18T15:57:55+00:00</updated><id>https://flodarpie.github.io//feed.xml</id><title type="html">Florian Duzés</title><subtitle>D&apos;aussi loin que je me souvienne, la cuisine est l&apos;endroit qui m&apos;a toujours paru le plus accueillant...</subtitle><entry><title type="html">Ubuntu, Bureau et Icône</title><link href="https://flodarpie.github.io//posts/2026-06-18-ubuntu-desktop-customization/" rel="alternate" type="text/html" title="Ubuntu, Bureau et Icône" /><published>2026-06-18T17:56:12+00:00</published><updated>2026-06-18T17:56:12+00:00</updated><id>https://flodarpie.github.io//posts/ubuntu-desktop-customization</id><content type="html" xml:base="https://flodarpie.github.io//posts/2026-06-18-ubuntu-desktop-customization/"><![CDATA[<p>J’ai rencontré ce problème lors de l’ajout sur mon bureau d’un logiciel installé via <code class="language-plaintext highlighter-rouge">apt</code> :</p>
+
+<p><img src="/static/26-06-18.png" alt="icones" class="img-gauche" /></p>
+
+<p>Application installée, on configure le fichier <code class="language-plaintext highlighter-rouge">~/.local/share/applications/monappli.desktop</code> (ou directement à la racine : <code class="language-plaintext highlighter-rouge">/usr/share/applications/monappli.desktop</code>).</p>
+
+<p>Ici, j’installe <strong>Mattermost</strong> et l’icône est désynchronisée du processus lancé. Cliquer sur l’icône démarre bien le service pourtant le manager de services ne fait pas le lien entre le processus et l’icône de l’application sur le bureau.</p>
+
+<p>On voit avec cet exemple que l’icône de l’application est bien reconnue et enregistrée. Pourtant, après l’ouverture de cette dernière, une <em>icône engrenage gris</em> apparaît en lieu et place du logo de l’application.</p>
+
+<p><br /><br /><br /><br /></p>
+
+<p>Pour résoudre ce petit problème, il faut retourner dans la définition du fichier <em>desktop</em>.</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">~/.local/share/applications$</span><span class="w"> </span><span class="nb">cat</span> /usr/share/applications/mattermost-desktop.desktop
+<span class="go">[Desktop Entry]
+Name=Mattermost
+Exec=/opt/Mattermost/mattermost-desktop %U
+Terminal=false
+Type=Application
+Icon=mattermost-desktop
+StartupWMClass=Mattermost
+Comment=Mattermost
+</span><span class="gp">MimeType=x-scheme-handler/mattermost;</span><span class="w">
+</span><span class="gp">Categories=Network;</span>InstantMessaging<span class="p">;</span></code></pre></figure>
+
+<p>Sauf que passer la souris en surface de cette icône grise me révèle le nom de <code class="language-plaintext highlighter-rouge">mattermost.desktop</code>.</p>
+
+<p>Il suffit alors de changer la variable <code class="language-plaintext highlighter-rouge">StartupWMClass=Mattermost.Desktop</code> pour que le service <strong>WindowsManager</strong> (d’où le VMClass) fasse le lien entre le processus et l’icône qu’il a enregistré.</p>
+
+<p>Et voilà, plus aucune icône d’engrenage grise :</p>
+
+<p><img src="/static/26-06-18.1.png" alt="icones2" /></p>
+
+<p>Un bel environnement pour le nouveau <strong>Ubuntu 26.04</strong>.</p>]]></content><author><name></name></author><category term="linux" /><category term="tips_and_tricks" /><summary type="html"><![CDATA[J’ai rencontré ce problème lors de l’ajout sur mon bureau d’un logiciel installé via apt :]]></summary></entry></feed>

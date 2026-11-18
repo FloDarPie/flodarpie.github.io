@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Ubuntu, Bureau et Icône | Florian Duzés</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Ubuntu, Bureau et Icône" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="J’ai rencontré ce problème lors de l’ajout sur mon bureau d’un logiciel installé via apt :" />
+<meta property="og:description" content="J’ai rencontré ce problème lors de l’ajout sur mon bureau d’un logiciel installé via apt :" />
+<link rel="canonical" href="https://flodarpie.github.io//posts/2026-06-18-ubuntu-desktop-customization/" />
+<meta property="og:url" content="https://flodarpie.github.io//posts/2026-06-18-ubuntu-desktop-customization/" />
+<meta property="og:site_name" content="Florian Duzés" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-06-18T17:56:12+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Ubuntu, Bureau et Icône" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-06-18T17:56:12+00:00","datePublished":"2026-06-18T17:56:12+00:00","description":"J’ai rencontré ce problème lors de l’ajout sur mon bureau d’un logiciel installé via apt :","headline":"Ubuntu, Bureau et Icône","mainEntityOfPage":{"@type":"WebPage","@id":"https://flodarpie.github.io//posts/2026-06-18-ubuntu-desktop-customization/"},"url":"https://flodarpie.github.io//posts/2026-06-18-ubuntu-desktop-customization/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://flodarpie.github.io//feed.xml" title="Florian Duzés" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Florian Duzés</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/experience/">Expériences passées</a><a class="page-link" href="/presentation/">Lectures &amp; présentations</a><a class="page-link" href="/posts/">Billets</a><a class="page-link" href="/about/">À propos</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Ubuntu, Bureau et Icône</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2026-06-18T17:56:12+00:00" itemprop="datePublished">Jun 18, 2026
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>J’ai rencontré ce problème lors de l’ajout sur mon bureau d’un logiciel installé via <code class="language-plaintext highlighter-rouge">apt</code> :</p>
+
+<p><img src="/static/26-06-18.png" alt="icones" class="img-gauche" /></p>
+
+<p>Application installée, on configure le fichier <code class="language-plaintext highlighter-rouge">~/.local/share/applications/monappli.desktop</code> (ou directement à la racine : <code class="language-plaintext highlighter-rouge">/usr/share/applications/monappli.desktop</code>).</p>
+
+<p>Ici, j’installe <strong>Mattermost</strong> et l’icône est désynchronisée du processus lancé. Cliquer sur l’icône démarre bien le service pourtant le manager de services ne fait pas le lien entre le processus et l’icône de l’application sur le bureau.</p>
+
+<p>On voit avec cet exemple que l’icône de l’application est bien reconnue et enregistrée. Pourtant, après l’ouverture de cette dernière, une <em>icône engrenage gris</em> apparaît en lieu et place du logo de l’application.</p>
+
+<p><br /><br /><br /><br /></p>
+
+<p>Pour résoudre ce petit problème, il faut retourner dans la définition du fichier <em>desktop</em>.</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">~/.local/share/applications$</span><span class="w"> </span><span class="nb">cat</span> /usr/share/applications/mattermost-desktop.desktop
+<span class="go">[Desktop Entry]
+Name=Mattermost
+Exec=/opt/Mattermost/mattermost-desktop %U
+Terminal=false
+Type=Application
+Icon=mattermost-desktop
+StartupWMClass=Mattermost
+Comment=Mattermost
+</span><span class="gp">MimeType=x-scheme-handler/mattermost;</span><span class="w">
+</span><span class="gp">Categories=Network;</span>InstantMessaging<span class="p">;</span></code></pre></figure>
+
+<p>Sauf que passer la souris en surface de cette icône grise me révèle le nom de <code class="language-plaintext highlighter-rouge">mattermost.desktop</code>.</p>
+
+<p>Il suffit alors de changer la variable <code class="language-plaintext highlighter-rouge">StartupWMClass=Mattermost.Desktop</code> pour que le service <strong>WindowsManager</strong> (d’où le VMClass) fasse le lien entre le processus et l’icône qu’il a enregistré.</p>
+
+<p>Et voilà, plus aucune icône d’engrenage grise :</p>
+
+<p><img src="/static/26-06-18.1.png" alt="icones2" /></p>
+
+<p>Un bel environnement pour le nouveau <strong>Ubuntu 26.04</strong>.</p>
+
+  </div><a class="u-url" href="/posts/2026-06-18-ubuntu-desktop-customization/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    Contact :
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list"><li><a class="u-email" href="mailto:florian [point] duzes [arobase] cea (dot) fr">florian [point] duzes [arobase] cea (dot) fr</a></li><ul class="social-media-list"><li><a href="https://github.com/FloDarPie"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">FloDarPie</span></a></li><li><a href="https://www.linkedin.com/in/florian-duzes"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">florian-duzes</span></a></li></ul>
+</ul>
+      </div>
+
+      <div class="footer-col footer-col-2 footer-logo">
+        <!-- <img src="/assets/pictures/logo_footer.png"
+            alt="Logo"
+            class="footer-logo-img"> -->
+        <p class="footer-logo-text">
+          ©Florian Duzés- <br><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">.
+        </p>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>D&#39;aussi loin que je me souvienne, la cuisine est l&#39;endroit qui m&#39;a toujours paru le plus accueillant...</p>
+        Dernière compilation : 18/11/2026
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
