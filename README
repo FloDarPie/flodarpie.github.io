@@ -27,7 +27,7 @@ Pour fusionner dev dans main, construire le site, et pousser sur GitHub :<br>
 ### 2. Points de vigilance
 ##### a. Fusion des branches
 
-Quand tu fais make publish, le Makefile fusionne automatiquement dev dans main. Assure-toi que dev est stable avant de publier, car les conflits de fusion peuvent arriver.<br>
+Quand tu fais make publish, le Makefile fusionne automatiquement 'dev' dans 'main'. Automatiquement deployer vers le projet github du depot.<br>
 Si tu as des conflits, Git te le signalera. Tu devras les résoudre manuellement (VS Code peut t’aider).
 
 
