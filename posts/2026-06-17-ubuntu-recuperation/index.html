@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Sauvetage d’un OS Linux | Florian Duzés</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Sauvetage d’un OS Linux" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="J’ai rencontré ce problème après une petite bêtise : voyant un processus gourmand que je ne connaissais pas, j’ai supprimé son dossier avec un rm -rf /usr/libexec. Résultat, impossible de démarrer l’ordinateur sur la partition principale." />
+<meta name="twitter:description" property="og:description" content="J’ai rencontré ce problème après une petite bêtise : voyant un processus gourmand que je ne connaissais pas, j’ai supprimé son dossier avec un rm -rf /usr/libexec. Résultat, impossible de démarrer l’ordinateur sur la partition principale." />
+<link rel="canonical" href="https://flodarpie.github.io/posts/2026-06-17-ubuntu-recuperation/" />
+<meta property="og:url" content="https://flodarpie.github.io/posts/2026-06-17-ubuntu-recuperation/" />
+<meta property="og:site_name" content="Florian Duzés" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-06-17T17:59:54+00:00" />
+<meta property="article:modified_time" content="2026-06-17T17:59:54+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Sauvetage d’un OS Linux" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-06-17T17:59:54+00:00","datePublished":"2026-06-17T17:59:54+00:00","description":"J’ai rencontré ce problème après une petite bêtise : voyant un processus gourmand que je ne connaissais pas, j’ai supprimé son dossier avec un rm -rf /usr/libexec. Résultat, impossible de démarrer l’ordinateur sur la partition principale.","headline":"Sauvetage d’un OS Linux","mainEntityOfPage":{"@type":"WebPage","@id":"https://flodarpie.github.io/posts/2026-06-17-ubuntu-recuperation/"},"url":"https://flodarpie.github.io/posts/2026-06-17-ubuntu-recuperation/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://flodarpie.github.io/feed.xml" title="Florian Duzés" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Florian Duzés</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/experience/">Expériences passées</a><a class="page-link" href="/presentation/">Lectures &amp; présentations</a><a class="page-link" href="/posts/">Billets</a><a class="page-link" href="/about/">À propos</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Sauvetage d&#39;un OS Linux</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2026-06-17T17:59:54+00:00" itemprop="datePublished">Jun 17, 2026
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>J’ai rencontré ce problème après une petite bêtise : voyant un processus gourmand que je ne connaissais pas, j’ai supprimé son dossier avec un <code class="language-plaintext highlighter-rouge">rm -rf /usr/libexec</code>. Résultat, impossible de démarrer l’ordinateur sur la partition principale.</p>
+
+<p>Heureusement, la situation est récupérable. <code class="language-plaintext highlighter-rouge">/usr/libexec</code> contient des binaires <em>auxiliaires</em> appelés par de nombreux services (<strong>polkit</strong>, <strong>gdm</strong>, <strong>NetworkManager</strong>…), mais le noyau, l’initramfs et GRUB sont intacts. Pas besoin de réinstaller le système : il suffit de réinstaller les paquets qui avaient des fichiers dans ce dossier.</p>
+
+<p>Encore faut-il avoir Internet pour les télécharger…</p>
+
+<p><br /></p>
+
+<p>Premier réflexe : passer par le <strong>mode recovery</strong>. Au menu GRUB, <em>Options avancées pour Ubuntu</em> → <em>(recovery mode)</em> → <em>root</em>. On obtient un shell root, mais avec la racine montée en lecture seule. On la remonte en écriture, sinon <code class="language-plaintext highlighter-rouge">apt</code> ne pourra rien faire :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span>mount <span class="nt">-o</span> remount,rw /</code></pre></figure>
+
+<p>Pour le réseau, j’ai d’abord tenté <strong>NetworkManager</strong>. Le service démarre bien, mais la liste des réseaux reste vide alors que mes autres appareils voient le wifi. En lisant le <code class="language-plaintext highlighter-rouge">systemctl status NetworkManager</code>, on trouve un <code class="language-plaintext highlighter-rouge">failed to open /run/network/ifstate</code> : il lui manque sûrement un des binaires supprimés.</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span>systemctl start NetworkManager
+<span class="gp">#</span><span class="w"> </span>nmcli device wifi list
+<span class="go">IN-USE  BSSID  SSID  MODE  CHAN  RATE  SIGNAL  BARS  SECURITY</span></code></pre></figure>
+
+<p>On passe donc en manuel, directement avec <code class="language-plaintext highlighter-rouge">wpa_supplicant</code>. Dans cet environnement minimal, il manque plusieurs outils (<code class="language-plaintext highlighter-rouge">rfkill</code>, <code class="language-plaintext highlighter-rouge">wpa_passphrase</code>, <code class="language-plaintext highlighter-rouge">dhcpcd</code>), mais <code class="language-plaintext highlighter-rouge">ip</code>, <code class="language-plaintext highlighter-rouge">wpa_supplicant</code> et <code class="language-plaintext highlighter-rouge">dhclient</code> sont là, et cela suffit.</p>
+
+<p>L’interface wifi est celle dont le nom commence par <code class="language-plaintext highlighter-rouge">wl</code> (<code class="language-plaintext highlighter-rouge">lo</code> est l’interface locale) :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span>ip <span class="nb">link </span>show
+<span class="go">1: lo: ...
+2: wlp2s0: ...</span></code></pre></figure>
+
+<p>Sans <code class="language-plaintext highlighter-rouge">wpa_passphrase</code>, on écrit la configuration à la main, les guillemets sont obligatoires :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span><span class="nb">cat</span> <span class="o">&gt;</span> /tmp/wpa.conf <span class="o">&lt;&lt;</span> <span class="sh">'</span><span class="no">EOF</span><span class="sh">'
+</span><span class="go">network={
+    ssid="NOM_DU_WIFI"
+    psk="MOT_DE_PASSE"
+}
+EOF
+</span><span class="gp">#</span><span class="w"> </span>ip <span class="nb">link set </span>wlp2s0 up
+<span class="gp">#</span><span class="w"> </span>wpa_supplicant <span class="nt">-B</span> <span class="nt">-i</span> wlp2s0 <span class="nt">-c</span> /tmp/wpa.conf
+<span class="go">Successfully initialized wpa_supplicant
+rfkill: WLAN soft blocked
+</span><span class="gp">#</span><span class="w"> </span>dhclient wlp2s0
+<span class="go">RTNETLINK answers: Operation not possible due to RFKILL</span></code></pre></figure>
+
+<p>Nouveau problème : le wifi est bloqué logiciellement (une sorte de mode avion), et la commande <code class="language-plaintext highlighter-rouge">rfkill</code> n’existe pas ici. On peut contourner en passant directement par l’interface du noyau, dans <code class="language-plaintext highlighter-rouge">/sys/class/rfkill</code> :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span><span class="k">for </span>rf <span class="k">in</span> /sys/class/rfkill/rfkill<span class="k">*</span><span class="p">;</span> <span class="k">do</span>
+<span class="gp">    echo "$</span>rf : <span class="si">$(</span><span class="nb">cat</span> <span class="nv">$rf</span>/name<span class="si">)</span> <span class="nv">soft</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$rf</span>/soft<span class="si">)</span> <span class="nv">hard</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$rf</span>/hard<span class="si">)</span><span class="s2">"
+</span><span class="go">  done
+</span><span class="gp">#</span><span class="w"> </span><span class="nb">echo </span>0 <span class="o">&gt;</span> /sys/class/rfkill/rfkillN/soft</code></pre></figure>
+
+<p>Avec <code class="language-plaintext highlighter-rouge">N</code> le numéro de l’entrée wifi. Si c’est <code class="language-plaintext highlighter-rouge">hard=1</code> qui est actif, aucune commande n’y fera rien : c’est un interrupteur physique, une touche <em>Fn</em> ou une option du BIOS.</p>
+
+<p>Le blocage levé, on récupère une adresse IP et on vérifie la connexion. J’en profite pour forcer un serveur DNS, pour qu’<code class="language-plaintext highlighter-rouge">apt</code> puisse résoudre les noms de domaine :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span>dhclient wlp2s0
+<span class="gp">#</span><span class="w"> </span>ping <span class="nt">-c</span> 3 9.9.9.9
+<span class="gp">#</span><span class="w"> </span><span class="nb">echo</span> <span class="s2">"nameserver 9.9.9.9"</span> <span class="o">&gt;</span> /etc/resolv.conf</code></pre></figure>
+
+<p><br /></p>
+
+<p>Une fois en ligne, il reste à retrouver les paquets touchés. Bonne nouvelle : <code class="language-plaintext highlighter-rouge">dpkg</code> garde la liste des fichiers de chaque paquet dans <code class="language-plaintext highlighter-rouge">/var/lib/dpkg/info/*.list</code>, même si ces fichiers ont disparu. Un <code class="language-plaintext highlighter-rouge">grep</code> donne la liste, qu’on passe directement à <code class="language-plaintext highlighter-rouge">apt</code> :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span>apt-get update
+<span class="gp">#</span><span class="w"> </span>apt-get <span class="nb">install</span> <span class="nt">--reinstall</span> <span class="si">$(</span><span class="nb">grep</span> <span class="nt">-l</span> <span class="s2">"^/usr/libexec"</span> /var/lib/dpkg/info/<span class="k">*</span>.list | <span class="nb">sed</span> <span class="s1">'s#.*/##; s/\.list$//'</span><span class="si">)</span>
+<span class="gp">#</span><span class="w"> </span>reboot</code></pre></figure>
+
+<p>Et voilà, la session s’ouvre à nouveau normalement. Une dernière vérification ne fait pas de mal :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>apt-get check
+<span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> /usr/libexec | <span class="nb">wc</span> <span class="nt">-l</span></code></pre></figure>
+
+<p>La leçon du jour : avant de supprimer quoi que ce soit, identifier le processus (<code class="language-plaintext highlighter-rouge">ps aux --sort=-%cpu</code>) et le paquet qui le fournit (<code class="language-plaintext highlighter-rouge">dpkg -S /usr/libexec/...</code>). <code class="language-plaintext highlighter-rouge">/usr/libexec</code> a l’air obscur, mais des dizaines de services en dépendent.</p>
+
+  </div><a class="u-url" href="/posts/2026-06-17-ubuntu-recuperation/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" value="https://flodarpie.github.io/"></data>
+
+  <div class="wrapper footer-grid">
+
+    <section class="footer-contact">
+      <h2 class="footer-heading">Contact</h2>
+      <p class="u-email">florian [point] duzes [arobase] gmail (dot) fr</p><ul class="social-media-list"><li><a href="https://github.com/FloDarPie"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">FloDarPie</span></a></li><li><a href="https://www.linkedin.com/in/florian-duzes"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">florian-duzes</span></a></li></ul>
+</section>
+
+    <section class="footer-about">
+      <h2 class="footer-heading p-name">Florian Duzés</h2>
+      <p class="p-note">D&#39;aussi loin que je me souvienne, la cuisine est l&#39;endroit qui m&#39;a toujours paru le plus accueillant...</p>
+    </section>
+
+    <section class="footer-meta">
+      <p>
+        © 2026 Florian Duzés<br>
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a>
+        <span class="footer-cc" aria-hidden="true">
+          <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="">
+          <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="">
+          <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="">
+        </span>
+      </p>
+      <p>Dernière compilation : <time datetime="2026-11-21T02:24:29+00:00">21/11/2026</time></p>
+    </section>
+
+  </div>
+</footer>
+</body>
+
+</html>

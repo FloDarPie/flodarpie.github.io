@@ -1,4 +1,96 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://flodarpie.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://flodarpie.github.io//" rel="alternate" type="text/html" /><updated>2026-11-18T15:57:55+00:00</updated><id>https://flodarpie.github.io//feed.xml</id><title type="html">Florian Duzés</title><subtitle>D&apos;aussi loin que je me souvienne, la cuisine est l&apos;endroit qui m&apos;a toujours paru le plus accueillant...</subtitle><entry><title type="html">Ubuntu, Bureau et Icône</title><link href="https://flodarpie.github.io//posts/2026-06-18-ubuntu-desktop-customization/" rel="alternate" type="text/html" title="Ubuntu, Bureau et Icône" /><published>2026-06-18T17:56:12+00:00</published><updated>2026-06-18T17:56:12+00:00</updated><id>https://flodarpie.github.io//posts/ubuntu-desktop-customization</id><content type="html" xml:base="https://flodarpie.github.io//posts/2026-06-18-ubuntu-desktop-customization/"><![CDATA[<p>J’ai rencontré ce problème lors de l’ajout sur mon bureau d’un logiciel installé via <code class="language-plaintext highlighter-rouge">apt</code> :</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://flodarpie.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://flodarpie.github.io/" rel="alternate" type="text/html" /><updated>2026-11-21T02:24:29+00:00</updated><id>https://flodarpie.github.io/feed.xml</id><title type="html">Florian Duzés</title><subtitle>D&apos;aussi loin que je me souvienne, la cuisine est l&apos;endroit qui m&apos;a toujours paru le plus accueillant...</subtitle><entry><title type="html">VSCode, vscode-icons et tests Cram</title><link href="https://flodarpie.github.io/posts/2026-11-20-vscode-icons-dune-cram/" rel="alternate" type="text/html" title="VSCode, vscode-icons et tests Cram" /><published>2026-11-20T11:00:00+00:00</published><updated>2026-11-20T11:00:00+00:00</updated><id>https://flodarpie.github.io/posts/vscode-icons-dune-cram</id><content type="html" xml:base="https://flodarpie.github.io/posts/2026-11-20-vscode-icons-dune-cram/"><![CDATA[<p>Avec <strong>dune</strong>, les tests <em>cram</em> s’écrivent dans des fichiers <code class="language-plaintext highlighter-rouge">.t</code>. Problème : l’extension <strong>vscode-icons</strong> ne les reconnaît pas et leur attribue l’icône par défaut. Voici comment leur associer une icône, intégrée ou personnalisée.</p>
+
+<h2 id="1-associer-une-icône-existante">1. Associer une icône existante</h2>
+
+<p>vscode-icons se configure dans le <code class="language-plaintext highlighter-rouge">settings.json</code> utilisateur (<code class="language-plaintext highlighter-rouge">Ctrl+Shift+P</code> → <em>Preferences: Open User Settings (JSON)</em>), via la clé <code class="language-plaintext highlighter-rouge">vsicons.associations.files</code> :</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="nl">"workbench.iconTheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vscode-icons"</span><span class="err">,</span><span class="w">
+</span><span class="nl">"vsicons.associations.files"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dune"</span><span class="p">,</span><span class="w"> </span><span class="nl">"extensions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"t"</span><span class="p">],</span><span class="w"> </span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"svg"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span></code></pre></figure>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">icon</code> : nom de l’icône <strong>sans</strong> le préfixe <code class="language-plaintext highlighter-rouge">file_type_</code> ni l’extension. La liste complète se trouve dans le dossier de l’extension : <code class="language-plaintext highlighter-rouge">~/.vscode/extensions/vscode-icons-team.vscode-icons-&lt;version&gt;/icons/</code> (ex. <code class="language-plaintext highlighter-rouge">file_type_dune.svg</code> → <code class="language-plaintext highlighter-rouge">dune</code>, <code class="language-plaintext highlighter-rouge">file_type_test.svg</code> → <code class="language-plaintext highlighter-rouge">test</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">extensions</code> : les extensions <strong>sans le point</strong> (<code class="language-plaintext highlighter-rouge">"t"</code>, pas <code class="language-plaintext highlighter-rouge">".t"</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">format</code> : <code class="language-plaintext highlighter-rouge">svg</code> ou <code class="language-plaintext highlighter-rouge">png</code>.</li>
+</ul>
+
+<p>Pour retrouver rapidement une icône :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> ~/.vscode/extensions/vscode-icons-team.vscode-icons-<span class="k">*</span>/icons | <span class="nb">grep</span> <span class="nt">-iE</span> <span class="s1">'dune|ocaml|test'</span></code></pre></figure>
+
+<h2 id="2-utiliser-sa-propre-icône">2. Utiliser sa propre icône</h2>
+
+<p>Si aucune icône ne convient, on peut fournir la sienne. vscode-icons cherche les icônes personnalisées dans le dossier <code class="language-plaintext highlighter-rouge">vsicons-custom-icons</code>, placé dans le répertoire utilisateur de VSCode :</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>OS</th>
+      <th>Chemin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Linux</td>
+      <td><code class="language-plaintext highlighter-rouge">~/.config/Code/User/vsicons-custom-icons/</code></td>
+    </tr>
+    <tr>
+      <td>macOS</td>
+      <td><code class="language-plaintext highlighter-rouge">~/Library/Application Support/Code/User/vsicons-custom-icons/</code></td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td><code class="language-plaintext highlighter-rouge">%APPDATA%\Code\User\vsicons-custom-icons\</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Le chemin peut aussi être changé avec <code class="language-plaintext highlighter-rouge">vsicons.customIconFolderPath</code>.</p>
+
+<p>Le fichier doit respecter la convention de nommage <code class="language-plaintext highlighter-rouge">file_type_&lt;nom&gt;.svg</code>. Par exemple, pour une icône <code class="language-plaintext highlighter-rouge">test_dune</code> :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">$</span><span class="w"> </span><span class="nb">mkdir</span> <span class="nt">-p</span> ~/.config/Code/User/vsicons-custom-icons
+<span class="gp">$</span><span class="w"> </span><span class="nb">cp </span>mon_icone.svg ~/.config/Code/User/vsicons-custom-icons/file_type_test_dune.svg</code></pre></figure>
+
+<p>Puis dans <code class="language-plaintext highlighter-rouge">settings.json</code> :</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="nl">"vsicons.associations.files"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_dune"</span><span class="p">,</span><span class="w"> </span><span class="nl">"extensions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"t"</span><span class="p">],</span><span class="w"> </span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"svg"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span></code></pre></figure>
+
+<blockquote>
+  <p>Piège rencontré : déclarer <code class="language-plaintext highlighter-rouge">"icon": "test_dune"</code> sans créer le fichier <code class="language-plaintext highlighter-rouge">file_type_test_dune.svg</code> dans <code class="language-plaintext highlighter-rouge">vsicons-custom-icons</code>. L’association est ignorée silencieusement.</p>
+</blockquote>
+
+<h3 id="créer-licône-svg-gimp--inkscape">Créer l’icône SVG (GIMP / Inkscape)</h3>
+
+<p>GIMP travaille en matriciel : il ne sait <strong>pas</strong> exporter une image en SVG. Seuls les <strong>chemins</strong> (<em>paths</em>) peuvent être exportés en SVG.</p>
+
+<p><strong>Depuis GIMP, exporter un chemin :</strong></p>
+
+<ol>
+  <li>Ouvrir la fenêtre Chemins : <code class="language-plaintext highlighter-rouge">Fenêtres &gt; Fenêtres ancrables &gt; Chemins</code>.</li>
+  <li>Pas encore de chemin ? Faire une sélection, puis <code class="language-plaintext highlighter-rouge">Sélection &gt; Vers chemin</code>.</li>
+  <li>Clic droit sur le chemin → <strong>Exporter le chemin…</strong></li>
+  <li>Nommer le fichier <code class="language-plaintext highlighter-rouge">file_type_test_dune.svg</code> et choisir d’exporter le chemin actif ou tous les chemins.</li>
+</ol>
+
+<p><strong>Pour vectoriser une image matricielle, passer par Inkscape :</strong></p>
+
+<ol>
+  <li>Exporter l’image en PNG depuis GIMP.</li>
+  <li>L’ouvrir dans Inkscape, puis <code class="language-plaintext highlighter-rouge">Chemin &gt; Vectoriser un objet matriciel</code> (<code class="language-plaintext highlighter-rouge">Shift+Alt+B</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">Fichier &gt; Enregistrer sous</code> au format <strong>SVG simple</strong>.</li>
+</ol>
+
+<p>Conseil : utiliser une icône carrée, avec un <code class="language-plaintext highlighter-rouge">viewBox="0 0 32 32"</code>, pour un rendu propre dans l’explorateur de VSCode.</p>
+
+<h2 id="3-appliquer">3. Appliquer</h2>
+
+<p>Les modifications ne sont pas prises en compte à chaud : <code class="language-plaintext highlighter-rouge">Ctrl+Shift+P</code> → <strong>Icons: Apply Icons Customization</strong>, puis recharger la fenêtre (<em>Developer: Reload Window</em>).</p>
+
+<p>Et voilà, les tests cram ont enfin leur propre icône dans l’explorateur.</p>]]></content><author><name></name></author><category term="vscode" /><category term="ocaml" /><category term="tips_and_tricks" /><summary type="html"><![CDATA[Avec dune, les tests cram s’écrivent dans des fichiers .t. Problème : l’extension vscode-icons ne les reconnaît pas et leur attribue l’icône par défaut. Voici comment leur associer une icône, intégrée ou personnalisée.]]></summary></entry><entry><title type="html">Ubuntu, Bureau et Icône</title><link href="https://flodarpie.github.io/posts/2026-06-18-ubuntu-desktop-customization/" rel="alternate" type="text/html" title="Ubuntu, Bureau et Icône" /><published>2026-06-18T17:56:12+00:00</published><updated>2026-06-18T17:56:12+00:00</updated><id>https://flodarpie.github.io/posts/ubuntu-desktop-customization</id><content type="html" xml:base="https://flodarpie.github.io/posts/2026-06-18-ubuntu-desktop-customization/"><![CDATA[<p>J’ai rencontré ce problème lors de l’ajout sur mon bureau d’un logiciel installé via <code class="language-plaintext highlighter-rouge">apt</code> :</p>
 
 <p><img src="/static/26-06-18.png" alt="icones" class="img-gauche" /></p>
 
@@ -32,4 +124,73 @@ Comment=Mattermost
 
 <p><img src="/static/26-06-18.1.png" alt="icones2" /></p>
 
-<p>Un bel environnement pour le nouveau <strong>Ubuntu 26.04</strong>.</p>]]></content><author><name></name></author><category term="linux" /><category term="tips_and_tricks" /><summary type="html"><![CDATA[J’ai rencontré ce problème lors de l’ajout sur mon bureau d’un logiciel installé via apt :]]></summary></entry></feed>
+<p>Un bel environnement pour le nouveau <strong>Ubuntu 26.04</strong>.</p>]]></content><author><name></name></author><category term="linux" /><category term="tips_and_tricks" /><summary type="html"><![CDATA[J’ai rencontré ce problème lors de l’ajout sur mon bureau d’un logiciel installé via apt :]]></summary></entry><entry><title type="html">Sauvetage d’un OS Linux</title><link href="https://flodarpie.github.io/posts/2026-06-17-ubuntu-recuperation/" rel="alternate" type="text/html" title="Sauvetage d’un OS Linux" /><published>2026-06-17T17:59:54+00:00</published><updated>2026-06-17T17:59:54+00:00</updated><id>https://flodarpie.github.io/posts/ubuntu-recuperation</id><content type="html" xml:base="https://flodarpie.github.io/posts/2026-06-17-ubuntu-recuperation/"><![CDATA[<p>J’ai rencontré ce problème après une petite bêtise : voyant un processus gourmand que je ne connaissais pas, j’ai supprimé son dossier avec un <code class="language-plaintext highlighter-rouge">rm -rf /usr/libexec</code>. Résultat, impossible de démarrer l’ordinateur sur la partition principale.</p>
+
+<p>Heureusement, la situation est récupérable. <code class="language-plaintext highlighter-rouge">/usr/libexec</code> contient des binaires <em>auxiliaires</em> appelés par de nombreux services (<strong>polkit</strong>, <strong>gdm</strong>, <strong>NetworkManager</strong>…), mais le noyau, l’initramfs et GRUB sont intacts. Pas besoin de réinstaller le système : il suffit de réinstaller les paquets qui avaient des fichiers dans ce dossier.</p>
+
+<p>Encore faut-il avoir Internet pour les télécharger…</p>
+
+<p><br /></p>
+
+<p>Premier réflexe : passer par le <strong>mode recovery</strong>. Au menu GRUB, <em>Options avancées pour Ubuntu</em> → <em>(recovery mode)</em> → <em>root</em>. On obtient un shell root, mais avec la racine montée en lecture seule. On la remonte en écriture, sinon <code class="language-plaintext highlighter-rouge">apt</code> ne pourra rien faire :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span>mount <span class="nt">-o</span> remount,rw /</code></pre></figure>
+
+<p>Pour le réseau, j’ai d’abord tenté <strong>NetworkManager</strong>. Le service démarre bien, mais la liste des réseaux reste vide alors que mes autres appareils voient le wifi. En lisant le <code class="language-plaintext highlighter-rouge">systemctl status NetworkManager</code>, on trouve un <code class="language-plaintext highlighter-rouge">failed to open /run/network/ifstate</code> : il lui manque sûrement un des binaires supprimés.</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span>systemctl start NetworkManager
+<span class="gp">#</span><span class="w"> </span>nmcli device wifi list
+<span class="go">IN-USE  BSSID  SSID  MODE  CHAN  RATE  SIGNAL  BARS  SECURITY</span></code></pre></figure>
+
+<p>On passe donc en manuel, directement avec <code class="language-plaintext highlighter-rouge">wpa_supplicant</code>. Dans cet environnement minimal, il manque plusieurs outils (<code class="language-plaintext highlighter-rouge">rfkill</code>, <code class="language-plaintext highlighter-rouge">wpa_passphrase</code>, <code class="language-plaintext highlighter-rouge">dhcpcd</code>), mais <code class="language-plaintext highlighter-rouge">ip</code>, <code class="language-plaintext highlighter-rouge">wpa_supplicant</code> et <code class="language-plaintext highlighter-rouge">dhclient</code> sont là, et cela suffit.</p>
+
+<p>L’interface wifi est celle dont le nom commence par <code class="language-plaintext highlighter-rouge">wl</code> (<code class="language-plaintext highlighter-rouge">lo</code> est l’interface locale) :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span>ip <span class="nb">link </span>show
+<span class="go">1: lo: ...
+2: wlp2s0: ...</span></code></pre></figure>
+
+<p>Sans <code class="language-plaintext highlighter-rouge">wpa_passphrase</code>, on écrit la configuration à la main, les guillemets sont obligatoires :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span><span class="nb">cat</span> <span class="o">&gt;</span> /tmp/wpa.conf <span class="o">&lt;&lt;</span> <span class="sh">'</span><span class="no">EOF</span><span class="sh">'
+</span><span class="go">network={
+    ssid="NOM_DU_WIFI"
+    psk="MOT_DE_PASSE"
+}
+EOF
+</span><span class="gp">#</span><span class="w"> </span>ip <span class="nb">link set </span>wlp2s0 up
+<span class="gp">#</span><span class="w"> </span>wpa_supplicant <span class="nt">-B</span> <span class="nt">-i</span> wlp2s0 <span class="nt">-c</span> /tmp/wpa.conf
+<span class="go">Successfully initialized wpa_supplicant
+rfkill: WLAN soft blocked
+</span><span class="gp">#</span><span class="w"> </span>dhclient wlp2s0
+<span class="go">RTNETLINK answers: Operation not possible due to RFKILL</span></code></pre></figure>
+
+<p>Nouveau problème : le wifi est bloqué logiciellement (une sorte de mode avion), et la commande <code class="language-plaintext highlighter-rouge">rfkill</code> n’existe pas ici. On peut contourner en passant directement par l’interface du noyau, dans <code class="language-plaintext highlighter-rouge">/sys/class/rfkill</code> :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span><span class="k">for </span>rf <span class="k">in</span> /sys/class/rfkill/rfkill<span class="k">*</span><span class="p">;</span> <span class="k">do</span>
+<span class="gp">    echo "$</span>rf : <span class="si">$(</span><span class="nb">cat</span> <span class="nv">$rf</span>/name<span class="si">)</span> <span class="nv">soft</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$rf</span>/soft<span class="si">)</span> <span class="nv">hard</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$rf</span>/hard<span class="si">)</span><span class="s2">"
+</span><span class="go">  done
+</span><span class="gp">#</span><span class="w"> </span><span class="nb">echo </span>0 <span class="o">&gt;</span> /sys/class/rfkill/rfkillN/soft</code></pre></figure>
+
+<p>Avec <code class="language-plaintext highlighter-rouge">N</code> le numéro de l’entrée wifi. Si c’est <code class="language-plaintext highlighter-rouge">hard=1</code> qui est actif, aucune commande n’y fera rien : c’est un interrupteur physique, une touche <em>Fn</em> ou une option du BIOS.</p>
+
+<p>Le blocage levé, on récupère une adresse IP et on vérifie la connexion. J’en profite pour forcer un serveur DNS, pour qu’<code class="language-plaintext highlighter-rouge">apt</code> puisse résoudre les noms de domaine :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span>dhclient wlp2s0
+<span class="gp">#</span><span class="w"> </span>ping <span class="nt">-c</span> 3 9.9.9.9
+<span class="gp">#</span><span class="w"> </span><span class="nb">echo</span> <span class="s2">"nameserver 9.9.9.9"</span> <span class="o">&gt;</span> /etc/resolv.conf</code></pre></figure>
+
+<p><br /></p>
+
+<p>Une fois en ligne, il reste à retrouver les paquets touchés. Bonne nouvelle : <code class="language-plaintext highlighter-rouge">dpkg</code> garde la liste des fichiers de chaque paquet dans <code class="language-plaintext highlighter-rouge">/var/lib/dpkg/info/*.list</code>, même si ces fichiers ont disparu. Un <code class="language-plaintext highlighter-rouge">grep</code> donne la liste, qu’on passe directement à <code class="language-plaintext highlighter-rouge">apt</code> :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">#</span><span class="w"> </span>apt-get update
+<span class="gp">#</span><span class="w"> </span>apt-get <span class="nb">install</span> <span class="nt">--reinstall</span> <span class="si">$(</span><span class="nb">grep</span> <span class="nt">-l</span> <span class="s2">"^/usr/libexec"</span> /var/lib/dpkg/info/<span class="k">*</span>.list | <span class="nb">sed</span> <span class="s1">'s#.*/##; s/\.list$//'</span><span class="si">)</span>
+<span class="gp">#</span><span class="w"> </span>reboot</code></pre></figure>
+
+<p>Et voilà, la session s’ouvre à nouveau normalement. Une dernière vérification ne fait pas de mal :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>apt-get check
+<span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> /usr/libexec | <span class="nb">wc</span> <span class="nt">-l</span></code></pre></figure>
+
+<p>La leçon du jour : avant de supprimer quoi que ce soit, identifier le processus (<code class="language-plaintext highlighter-rouge">ps aux --sort=-%cpu</code>) et le paquet qui le fournit (<code class="language-plaintext highlighter-rouge">dpkg -S /usr/libexec/...</code>). <code class="language-plaintext highlighter-rouge">/usr/libexec</code> a l’air obscur, mais des dizaines de services en dépendent.</p>]]></content><author><name></name></author><category term="linux" /><category term="tips_and_tricks" /><summary type="html"><![CDATA[J’ai rencontré ce problème après une petite bêtise : voyant un processus gourmand que je ne connaissais pas, j’ai supprimé son dossier avec un rm -rf /usr/libexec. Résultat, impossible de démarrer l’ordinateur sur la partition principale.]]></summary></entry></feed>

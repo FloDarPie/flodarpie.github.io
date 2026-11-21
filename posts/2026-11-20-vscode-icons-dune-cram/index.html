@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>VSCode, vscode-icons et tests Cram | Florian Duzés</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="VSCode, vscode-icons et tests Cram" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Avec dune, les tests cram s’écrivent dans des fichiers .t. Problème : l’extension vscode-icons ne les reconnaît pas et leur attribue l’icône par défaut. Voici comment leur associer une icône, intégrée ou personnalisée." />
+<meta name="twitter:description" property="og:description" content="Avec dune, les tests cram s’écrivent dans des fichiers .t. Problème : l’extension vscode-icons ne les reconnaît pas et leur attribue l’icône par défaut. Voici comment leur associer une icône, intégrée ou personnalisée." />
+<link rel="canonical" href="https://flodarpie.github.io/posts/2026-11-20-vscode-icons-dune-cram/" />
+<meta property="og:url" content="https://flodarpie.github.io/posts/2026-11-20-vscode-icons-dune-cram/" />
+<meta property="og:site_name" content="Florian Duzés" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-11-20T11:00:00+00:00" />
+<meta property="article:modified_time" content="2026-11-20T11:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="VSCode, vscode-icons et tests Cram" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-11-20T11:00:00+00:00","datePublished":"2026-11-20T11:00:00+00:00","description":"Avec dune, les tests cram s’écrivent dans des fichiers .t. Problème : l’extension vscode-icons ne les reconnaît pas et leur attribue l’icône par défaut. Voici comment leur associer une icône, intégrée ou personnalisée.","headline":"VSCode, vscode-icons et tests Cram","mainEntityOfPage":{"@type":"WebPage","@id":"https://flodarpie.github.io/posts/2026-11-20-vscode-icons-dune-cram/"},"url":"https://flodarpie.github.io/posts/2026-11-20-vscode-icons-dune-cram/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://flodarpie.github.io/feed.xml" title="Florian Duzés" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Florian Duzés</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/experience/">Expériences passées</a><a class="page-link" href="/presentation/">Lectures &amp; présentations</a><a class="page-link" href="/posts/">Billets</a><a class="page-link" href="/about/">À propos</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">VSCode, vscode-icons et tests Cram</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2026-11-20T11:00:00+00:00" itemprop="datePublished">Nov 20, 2026
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Avec <strong>dune</strong>, les tests <em>cram</em> s’écrivent dans des fichiers <code class="language-plaintext highlighter-rouge">.t</code>. Problème : l’extension <strong>vscode-icons</strong> ne les reconnaît pas et leur attribue l’icône par défaut. Voici comment leur associer une icône, intégrée ou personnalisée.</p>
+
+<h2 id="1-associer-une-icône-existante">1. Associer une icône existante</h2>
+
+<p>vscode-icons se configure dans le <code class="language-plaintext highlighter-rouge">settings.json</code> utilisateur (<code class="language-plaintext highlighter-rouge">Ctrl+Shift+P</code> → <em>Preferences: Open User Settings (JSON)</em>), via la clé <code class="language-plaintext highlighter-rouge">vsicons.associations.files</code> :</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="nl">"workbench.iconTheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vscode-icons"</span><span class="err">,</span><span class="w">
+</span><span class="nl">"vsicons.associations.files"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dune"</span><span class="p">,</span><span class="w"> </span><span class="nl">"extensions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"t"</span><span class="p">],</span><span class="w"> </span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"svg"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span></code></pre></figure>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">icon</code> : nom de l’icône <strong>sans</strong> le préfixe <code class="language-plaintext highlighter-rouge">file_type_</code> ni l’extension. La liste complète se trouve dans le dossier de l’extension : <code class="language-plaintext highlighter-rouge">~/.vscode/extensions/vscode-icons-team.vscode-icons-&lt;version&gt;/icons/</code> (ex. <code class="language-plaintext highlighter-rouge">file_type_dune.svg</code> → <code class="language-plaintext highlighter-rouge">dune</code>, <code class="language-plaintext highlighter-rouge">file_type_test.svg</code> → <code class="language-plaintext highlighter-rouge">test</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">extensions</code> : les extensions <strong>sans le point</strong> (<code class="language-plaintext highlighter-rouge">"t"</code>, pas <code class="language-plaintext highlighter-rouge">".t"</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">format</code> : <code class="language-plaintext highlighter-rouge">svg</code> ou <code class="language-plaintext highlighter-rouge">png</code>.</li>
+</ul>
+
+<p>Pour retrouver rapidement une icône :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> ~/.vscode/extensions/vscode-icons-team.vscode-icons-<span class="k">*</span>/icons | <span class="nb">grep</span> <span class="nt">-iE</span> <span class="s1">'dune|ocaml|test'</span></code></pre></figure>
+
+<h2 id="2-utiliser-sa-propre-icône">2. Utiliser sa propre icône</h2>
+
+<p>Si aucune icône ne convient, on peut fournir la sienne. vscode-icons cherche les icônes personnalisées dans le dossier <code class="language-plaintext highlighter-rouge">vsicons-custom-icons</code>, placé dans le répertoire utilisateur de VSCode :</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>OS</th>
+      <th>Chemin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Linux</td>
+      <td><code class="language-plaintext highlighter-rouge">~/.config/Code/User/vsicons-custom-icons/</code></td>
+    </tr>
+    <tr>
+      <td>macOS</td>
+      <td><code class="language-plaintext highlighter-rouge">~/Library/Application Support/Code/User/vsicons-custom-icons/</code></td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td><code class="language-plaintext highlighter-rouge">%APPDATA%\Code\User\vsicons-custom-icons\</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Le chemin peut aussi être changé avec <code class="language-plaintext highlighter-rouge">vsicons.customIconFolderPath</code>.</p>
+
+<p>Le fichier doit respecter la convention de nommage <code class="language-plaintext highlighter-rouge">file_type_&lt;nom&gt;.svg</code>. Par exemple, pour une icône <code class="language-plaintext highlighter-rouge">test_dune</code> :</p>
+
+<figure class="highlight"><pre><code class="language-terminal" data-lang="terminal"><span class="gp">$</span><span class="w"> </span><span class="nb">mkdir</span> <span class="nt">-p</span> ~/.config/Code/User/vsicons-custom-icons
+<span class="gp">$</span><span class="w"> </span><span class="nb">cp </span>mon_icone.svg ~/.config/Code/User/vsicons-custom-icons/file_type_test_dune.svg</code></pre></figure>
+
+<p>Puis dans <code class="language-plaintext highlighter-rouge">settings.json</code> :</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="nl">"vsicons.associations.files"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_dune"</span><span class="p">,</span><span class="w"> </span><span class="nl">"extensions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"t"</span><span class="p">],</span><span class="w"> </span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"svg"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span></code></pre></figure>
+
+<blockquote>
+  <p>Piège rencontré : déclarer <code class="language-plaintext highlighter-rouge">"icon": "test_dune"</code> sans créer le fichier <code class="language-plaintext highlighter-rouge">file_type_test_dune.svg</code> dans <code class="language-plaintext highlighter-rouge">vsicons-custom-icons</code>. L’association est ignorée silencieusement.</p>
+</blockquote>
+
+<h3 id="créer-licône-svg-gimp--inkscape">Créer l’icône SVG (GIMP / Inkscape)</h3>
+
+<p>GIMP travaille en matriciel : il ne sait <strong>pas</strong> exporter une image en SVG. Seuls les <strong>chemins</strong> (<em>paths</em>) peuvent être exportés en SVG.</p>
+
+<p><strong>Depuis GIMP, exporter un chemin :</strong></p>
+
+<ol>
+  <li>Ouvrir la fenêtre Chemins : <code class="language-plaintext highlighter-rouge">Fenêtres &gt; Fenêtres ancrables &gt; Chemins</code>.</li>
+  <li>Pas encore de chemin ? Faire une sélection, puis <code class="language-plaintext highlighter-rouge">Sélection &gt; Vers chemin</code>.</li>
+  <li>Clic droit sur le chemin → <strong>Exporter le chemin…</strong></li>
+  <li>Nommer le fichier <code class="language-plaintext highlighter-rouge">file_type_test_dune.svg</code> et choisir d’exporter le chemin actif ou tous les chemins.</li>
+</ol>
+
+<p><strong>Pour vectoriser une image matricielle, passer par Inkscape :</strong></p>
+
+<ol>
+  <li>Exporter l’image en PNG depuis GIMP.</li>
+  <li>L’ouvrir dans Inkscape, puis <code class="language-plaintext highlighter-rouge">Chemin &gt; Vectoriser un objet matriciel</code> (<code class="language-plaintext highlighter-rouge">Shift+Alt+B</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">Fichier &gt; Enregistrer sous</code> au format <strong>SVG simple</strong>.</li>
+</ol>
+
+<p>Conseil : utiliser une icône carrée, avec un <code class="language-plaintext highlighter-rouge">viewBox="0 0 32 32"</code>, pour un rendu propre dans l’explorateur de VSCode.</p>
+
+<h2 id="3-appliquer">3. Appliquer</h2>
+
+<p>Les modifications ne sont pas prises en compte à chaud : <code class="language-plaintext highlighter-rouge">Ctrl+Shift+P</code> → <strong>Icons: Apply Icons Customization</strong>, puis recharger la fenêtre (<em>Developer: Reload Window</em>).</p>
+
+<p>Et voilà, les tests cram ont enfin leur propre icône dans l’explorateur.</p>
+
+  </div><a class="u-url" href="/posts/2026-11-20-vscode-icons-dune-cram/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" value="https://flodarpie.github.io/"></data>
+
+  <div class="wrapper footer-grid">
+
+    <section class="footer-contact">
+      <h2 class="footer-heading">Contact</h2>
+      <p class="u-email">florian [point] duzes [arobase] gmail (dot) fr</p><ul class="social-media-list"><li><a href="https://github.com/FloDarPie"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">FloDarPie</span></a></li><li><a href="https://www.linkedin.com/in/florian-duzes"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">florian-duzes</span></a></li></ul>
+</section>
+
+    <section class="footer-about">
+      <h2 class="footer-heading p-name">Florian Duzés</h2>
+      <p class="p-note">D&#39;aussi loin que je me souvienne, la cuisine est l&#39;endroit qui m&#39;a toujours paru le plus accueillant...</p>
+    </section>
+
+    <section class="footer-meta">
+      <p>
+        © 2026 Florian Duzés<br>
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a>
+        <span class="footer-cc" aria-hidden="true">
+          <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="">
+          <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="">
+          <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="">
+        </span>
+      </p>
+      <p>Dernière compilation : <time datetime="2026-11-21T02:24:29+00:00">21/11/2026</time></p>
+    </section>
+
+  </div>
+</footer>
+</body>
+
+</html>

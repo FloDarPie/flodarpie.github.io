@@ -2,23 +2,23 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>Billets | Florian Duzés</title>
 <meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="Billets" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="D’aussi loin que je me souvienne, la cuisine est l’endroit qui m’a toujours paru le plus accueillant…" />
-<meta property="og:description" content="D’aussi loin que je me souvienne, la cuisine est l’endroit qui m’a toujours paru le plus accueillant…" />
-<link rel="canonical" href="https://flodarpie.github.io//posts/" />
-<meta property="og:url" content="https://flodarpie.github.io//posts/" />
+<meta name="twitter:description" property="og:description" content="D’aussi loin que je me souvienne, la cuisine est l’endroit qui m’a toujours paru le plus accueillant…" />
+<link rel="canonical" href="https://flodarpie.github.io/posts/" />
+<meta property="og:url" content="https://flodarpie.github.io/posts/" />
 <meta property="og:site_name" content="Florian Duzés" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Billets" />
+<meta name="twitter:title" content="Billets" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"D’aussi loin que je me souvienne, la cuisine est l’endroit qui m’a toujours paru le plus accueillant…","headline":"Billets","url":"https://flodarpie.github.io//posts/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"D’aussi loin que je me souvienne, la cuisine est l’endroit qui m’a toujours paru le plus accueillant…","headline":"Billets","url":"https://flodarpie.github.io/posts/"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://flodarpie.github.io//feed.xml" title="Florian Duzés" /></head>
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://flodarpie.github.io/feed.xml" title="Florian Duzés" /></head>
 <body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/">Florian Duzés</a><nav class="site-nav">
@@ -45,10 +45,33 @@
 
     </div>
   </header>
+  <nav class="filtres" aria-label="Filtrer par catégorie">
+    <button type="button" data-filtre="" aria-pressed="true">tout</button>
+    <button type="button" data-filtre="linux" aria-pressed="false">linux</button>
+    <button type="button" data-filtre="ocaml" aria-pressed="false">ocaml</button>
+    <button type="button" data-filtre="tips_and_tricks" aria-pressed="false">tips and tricks</button>
+    <button type="button" data-filtre="vscode" aria-pressed="false">vscode</button>
+  </nav>
   <section class="carte-annee" aria-labelledby="annee-2026">
     <h2 class="carte-annee-titre" id="annee-2026">2026</h2>
 
-    <ul class="carte-liste"><li class="plat">
+    <ul class="carte-liste"><li class="plat" data-categories="vscode ocaml tips_and_tricks">
+        <div class="plat-ligne">
+          <a class="plat-titre" href="/posts/2026-11-20-vscode-icons-dune-cram/">VSCode, vscode-icons et tests Cram</a>
+          <span class="plat-points" aria-hidden="true"></span>
+          <time class="plat-date" datetime="2026-11-20T11:00:00+00:00">
+            20 novembre
+          </time>
+        </div>
+        <div class="plat-sous-ligne">
+          <p class="plat-resume">[Note de résolution]</p>
+          <ul class="plat-categories" aria-label="Catégories">
+            <li class="plat-categorie">vscode</li>
+            <li class="plat-categorie">ocaml</li>
+            <li class="plat-categorie">tips and tricks</li>
+          </ul>
+        </div>
+      </li><li class="plat" data-categories="linux tips_and_tricks">
         <div class="plat-ligne">
           <a class="plat-titre" href="/posts/2026-06-18-ubuntu-desktop-customization/">Ubuntu, Bureau et Icône</a>
           <span class="plat-points" aria-hidden="true"></span>
@@ -56,42 +79,78 @@
             18 juin
           </time>
         </div>
-        <p class="plat-resume">[Note de résolution]</p>
+        <div class="plat-sous-ligne">
+          <p class="plat-resume">[Note de résolution]</p>
+          <ul class="plat-categories" aria-label="Catégories">
+            <li class="plat-categorie">linux</li>
+            <li class="plat-categorie">tips and tricks</li>
+          </ul>
+        </div>
+      </li><li class="plat" data-categories="linux tips_and_tricks">
+        <div class="plat-ligne">
+          <a class="plat-titre" href="/posts/2026-06-17-ubuntu-recuperation/">Sauvetage d&#39;un OS Linux</a>
+          <span class="plat-points" aria-hidden="true"></span>
+          <time class="plat-date" datetime="2026-06-17T17:59:54+00:00">
+            17 juin
+          </time>
+        </div>
+        <div class="plat-sous-ligne">
+          <p class="plat-resume">[Note de résolution]</p>
+          <ul class="plat-categories" aria-label="Catégories">
+            <li class="plat-categorie">linux</li>
+            <li class="plat-categorie">tips and tricks</li>
+          </ul>
+        </div>
       </li>
     </ul>
   </section>
 
 </article>
+<script>
+  document.querySelector('.filtres')?.addEventListener('click', (e) => {
+    const bouton = e.target.closest('button');
+    if (!bouton) return;
+    const filtre = bouton.dataset.filtre;
+    document.querySelectorAll('.filtres button').forEach((b) => b.setAttribute('aria-pressed', b === bouton));
+    document.querySelectorAll('.plat').forEach((li) => {
+      li.hidden = filtre !== '' && !li.dataset.categories.split(' ').includes(filtre);
+    });
+    document.querySelectorAll('.carte-annee').forEach((s) => {
+      s.hidden = !s.querySelector('.plat:not([hidden])');
+    });
+  });
+</script>
+
       </div>
     </main><footer class="site-footer h-card">
-  <data class="u-url" href="/"></data>
+  <data class="u-url" value="https://flodarpie.github.io/"></data>
 
-  <div class="wrapper">
+  <div class="wrapper footer-grid">
 
-    Contact :
-    <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list"><li><a class="u-email" href="mailto:florian [point] duzes [arobase] cea (dot) fr">florian [point] duzes [arobase] cea (dot) fr</a></li><ul class="social-media-list"><li><a href="https://github.com/FloDarPie"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">FloDarPie</span></a></li><li><a href="https://www.linkedin.com/in/florian-duzes"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">florian-duzes</span></a></li></ul>
-</ul>
-      </div>
+    <section class="footer-contact">
+      <h2 class="footer-heading">Contact</h2>
+      <p class="u-email">florian [point] duzes [arobase] gmail (dot) fr</p><ul class="social-media-list"><li><a href="https://github.com/FloDarPie"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">FloDarPie</span></a></li><li><a href="https://www.linkedin.com/in/florian-duzes"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">florian-duzes</span></a></li></ul>
+</section>
 
-      <div class="footer-col footer-col-2 footer-logo">
-        <!-- <img src="/assets/pictures/logo_footer.png"
-            alt="Logo"
-            class="footer-logo-img"> -->
-        <p class="footer-logo-text">
-          ©Florian Duzés- <br><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">.
-        </p>
-      </div>
+    <section class="footer-about">
+      <h2 class="footer-heading p-name">Florian Duzés</h2>
+      <p class="p-note">D&#39;aussi loin que je me souvienne, la cuisine est l&#39;endroit qui m&#39;a toujours paru le plus accueillant...</p>
+    </section>
 
-      <div class="footer-col footer-col-3">
-        <p>D&#39;aussi loin que je me souvienne, la cuisine est l&#39;endroit qui m&#39;a toujours paru le plus accueillant...</p>
-        Dernière compilation : 18/11/2026
-      </div>
-    </div>
+    <section class="footer-meta">
+      <p>
+        © 2026 Florian Duzés<br>
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a>
+        <span class="footer-cc" aria-hidden="true">
+          <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="">
+          <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="">
+          <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="">
+        </span>
+      </p>
+      <p>Dernière compilation : <time datetime="2026-11-21T02:24:29+00:00">21/11/2026</time></p>
+    </section>
 
   </div>
-
 </footer>
 </body>
 
